@@ -14,6 +14,26 @@ warnings.filterwarnings("ignore")
 # Get the directory where app.py is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+import os
+import gdown
+
+# ── Download models from Google Drive if not present ──────────
+MODEL_IDS = {
+    "models/lr_model.pkl":  "1K-SuX5qJFK_25ePPrO4T2XP8Zniuajnf",
+    "models/svm_model.pkl": "1fA5MzO3C7-ss20BujWDHL96T3zro7B4l",
+    "models/rf_model.pkl":  "1zHj1WtaQrdC8ko1tBReY9FAUfd8Tzdue",
+    "models/scaler.pkl":    "1iJM4GRUCfSUSJFNFEAe-Y0eYrLXh3i8X",
+    "models/tfidf.pkl":     "1V2850vY-TnAcjf1nQJJV34dlWh_41bcS",
+}
+
+os.makedirs("models", exist_ok=True)
+
+for path, file_id in MODEL_IDS.items():
+    if not os.path.exists(path):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        print(f"Downloading {path}...")
+        gdown.download(url, path, quiet=False)
+
 def get_path(*parts):
     """Build absolute path relative to app.py location"""
     return os.path.join(BASE_DIR, *parts)
