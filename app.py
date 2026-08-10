@@ -1,12 +1,17 @@
 import subprocess
 import sys
 
-# Install SHAP without numba dependency
+# Install SHAP and LIME without pulling numba/llvmlite
+for pkg in ["shap==0.41.0", "lime==0.2.0.1"]:
+    subprocess.run([
+        sys.executable, "-m", "pip", "install",
+        pkg, "--no-deps", "--quiet"
+    ], check=False)
+
+# Install scipy separately (needed by LIME, no conflicts)
 subprocess.run([
     sys.executable, "-m", "pip", "install",
-    "shap==0.41.0",
-    "--no-deps",
-    "--quiet"
+    "scipy", "--quiet"
 ], check=False)
 import streamlit as st
 import pandas as pd
