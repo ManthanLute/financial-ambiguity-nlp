@@ -1,3 +1,13 @@
+import subprocess
+import sys
+
+# Install SHAP without numba dependency
+subprocess.run([
+    sys.executable, "-m", "pip", "install",
+    "shap==0.41.0",
+    "--no-deps",
+    "--quiet"
+], check=False)
 import streamlit as st
 import pandas as pd
 import numpy as np
